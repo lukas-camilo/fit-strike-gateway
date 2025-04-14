@@ -6,7 +6,7 @@ terraform {
   required_version = ">= 0.12"
   backend "s3" {
     bucket  = "terraform-state-bucket-lucas"
-    key     = "terraform-fit-strike.tfstate"
+    key     = "terraform-fit-strike-gateway.tfstate"
     region  = "us-east-1"
     encrypt = true
   }
