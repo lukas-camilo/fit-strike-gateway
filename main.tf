@@ -2,6 +2,16 @@ provider "aws" {
     region = var.region
 }
 
+terraform {
+  required_version = ">= 0.12"
+  backend "s3" {
+    bucket  = "terraform-state-bucket-lucas"
+    key     = "terraform-fit-strike.tfstate"
+    region  = "us-east-1"
+    encrypt = true
+  }
+}
+
 resource "aws_api_gateway_rest_api" "fit_strike_api" {
     name = "Fit Strike API"
     description = "API Gateway for Fit Strike APP"
@@ -19,13 +29,4 @@ resource "aws_api_gateway_authorizer" "cognito_authorizer" {
     identity_source = "method.request.header.Authorization"
     provider_arns = [var.cognito_pool_arn]
     type = "COGNITO_USER_POOLS"
-}
-
-resource "aws_api_gateway_integration" "lambda_integration" {
-    rest_api_id = aws_api_gateway_rest_api.fit_strike_api.id
-    resource_id = aws_api_gateway_rest_api.fit_strike_api.root_resource_id
-    http_method = "ANY"
-    integration_http_method = "POST"
-    type = "AWS_PROXY"
-    uri = "arn:aws:apigateway:${var.region}:lambda:path/2015-03-31/functions/${var.lambda_function_arn}/invocations"
 }
