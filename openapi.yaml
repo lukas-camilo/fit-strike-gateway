@@ -15,6 +15,31 @@ paths:
         uri: arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:911167911476:function:fit-strike-api/invocations
         passthroughBehavior: when_no_match
         timeoutMillis: 29000
+    post:
+      summary: Create User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+              required:
+                - name
+                - email
+      responses:
+        '201':
+          description: User created successfully
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:911167911476:function:fit-strike-api/invocations
+        passthroughBehavior: when_no_match
+        timeoutMillis: 29000
 components:
   securitySchemes:
     cognitoAuth:
