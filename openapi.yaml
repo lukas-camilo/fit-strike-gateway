@@ -6,6 +6,19 @@ paths:
   /users:
     get:
       summary: Get Users
+      parameters:
+        - in: header
+          name: X-Limit
+          schema:
+            type: integer
+          required: false
+          description: Optional limit for the number of users to retrieve
+        - in: header
+          name: X-Last-Evaluated-Key
+          schema:
+            type: string
+          required: false
+          description: Optional key for pagination
       responses:
         '200':
           description: A list of users
